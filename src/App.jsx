@@ -1,25 +1,24 @@
-import { useState } from "react"
-import TaskComponents from "./task/TaskComponents"
-import { initialTasks } from "./TaskData/InitialTasks"
+import { useState } from "react";
+import TaskComponents from "./task/TaskComponents";
+import { initialTasks } from "./TaskData/InitialTasks";
 import { TaskContext } from "./context";
 
 function App() {
-  const [task,setTask] = useState(initialTasks());
-  const [editTask,setEditTask] = useState(null)
- 
+  const [task, setTask] = useState(initialTasks);
+  const [editTask, setEditTask] = useState(null);
+
   const providerValue = {
-    task: task,
-    setTask: setTask,
-    editTask: editTask,
-    setEditTask: setEditTask,
-  }
+    task,
+    setTask,
+    editTask,
+    setEditTask,
+  };
+
   return (
-    <>
     <TaskContext.Provider value={providerValue}>
-      <TaskComponents/>
+      <TaskComponents />
     </TaskContext.Provider>
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
