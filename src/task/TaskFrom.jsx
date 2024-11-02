@@ -1,7 +1,8 @@
-/* eslint-disable react/prop-types */
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { TaskContext } from "../context";
 
-function TaskFrom({addTask,editTask,upDataTask}) {    
+function TaskFrom() {    
+    const {task, setTask, editTask, setEditTask} = useContext(TaskContext);
     const [text,setText] = useState('');        
     useEffect(() =>{
         if (editTask) {
@@ -11,15 +12,25 @@ function TaskFrom({addTask,editTask,upDataTask}) {
 
     const textHandler = () => {
         if (editTask) {
-            upDataTask({
-                ...editTask,
-                text,
-            })
+            setTask(task.map(item => {
+                if (item.id === editTask.id) {
+                  return {
+                    ...editTask,
+                    text:text
+                  }
+                } else {
+                  return item; 
+                }
+              }));
+              setEditTask(null)
         } else {
-            addTask({
-            id:crypto.randomUUID(),
-            text,
-        })
+        setTask([
+            ...task,
+            {
+                id:crypto.randomUUID(),
+                text,
+            }
+        ])  
         }
         
         setText('')

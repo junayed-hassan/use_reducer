@@ -1,18 +1,20 @@
-/* eslint-disable react/prop-types */
+import { useContext } from "react"
 import TaskListHeader from "./TaskListHeader"
 import TaskListItems from "./TaskListItems"
+import { TaskContext } from "../context"
 
-function TaskList({task,onDeleteTask,onEditTask,allClearTask}) {    
+function TaskList() {  
+
+  const {task} = useContext(TaskContext);
+
   return (
     <div className="bg-gray-100 shadow-sm rounded-sm w-8/12">
-    <TaskListHeader allClearTask={allClearTask} />
+    <TaskListHeader />
     <ul className="p-3">
         {task.map(item => (
             <TaskListItems
                 key={item.id}
-                task={item}
-                onDeleteTask={onDeleteTask}
-                onEditTask={onEditTask}
+                tas={item}
             />
         ))}
     </ul>

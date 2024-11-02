@@ -1,46 +1,23 @@
 import { useState } from "react"
 import TaskComponents from "./task/TaskComponents"
 import { initialTasks } from "./TaskData/InitialTasks"
+import { TaskContext } from "./context";
 
 function App() {
   const [task,setTask] = useState(initialTasks());
   const [editTask,setEditTask] = useState(null)
-    
-  const AddTaskHandler = (item) => {
-    setTask([
-      ...task,
-      item
-  ])   
-  }  
-  const DeleteTaskHandler = (id) => {
-    setTask(task.filter(task => task.id !== id));
-  }
-  const EditTaskHandler = (t) => {
-    setEditTask(t);
-  }
-  const upDataTask = (upDataTask) => {
-    setTask(task.map(item => {
-      if (item.id === upDataTask.id) {
-        return upDataTask;
-      } else {
-        return item; 
-      }
-    }));
-  };
-  const allClearTask = () => {
-    setTask([])
+ 
+  const providerValue = {
+    task: task,
+    setTask: setTask,
+    editTask: editTask,
+    setEditTask: setEditTask,
   }
   return (
     <>
-      <TaskComponents
-      onAddTask={AddTaskHandler}
-      task={task}
-      onDeleteTask={DeleteTaskHandler}
-      onEditTask={EditTaskHandler}
-      editItems={editTask}
-      upDataTask={upDataTask}
-      allClearTask={allClearTask}
-      />
+    <TaskContext.Provider value={providerValue}>
+      <TaskComponents/>
+    </TaskContext.Provider>
     </>
   )
 }
