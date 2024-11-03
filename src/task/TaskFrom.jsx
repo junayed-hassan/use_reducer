@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../context";
 
 function TaskForm() {    
-    const { task, setTask, editTask, setEditTask } = useContext(TaskContext);
+    const { dispatch, editTask,} = useContext(TaskContext);
     const [text, setText] = useState('');        
     
     useEffect(() => {
@@ -13,22 +13,21 @@ function TaskForm() {
 
     const textHandler = () => {
         if (editTask) {
-            setTask(
-                task.map(item =>
-                    item.id === editTask.id
-                        ? { ...editTask, text }
-                        : item
-                )
-            );
-            setEditTask(null);
-        } else {
-            setTask([
-                ...task,
-                {
-                    id: crypto.randomUUID(),
+            dispatch({
+                type:'UPDATE_TASK',
+                payload: {
+                    ...editTask,
                     text,
-                },
-            ]);
+                }
+            })
+        } else {
+            dispatch({
+              type:'ADD_TASK',
+              payload: {
+                id: crypto.randomUUID(),
+                text,
+              }
+            })
         }
         
         setText('');

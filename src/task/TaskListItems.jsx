@@ -1,14 +1,16 @@
-/* eslint-disable react/prop-types */
 import { useContext } from "react";
 import { TaskContext } from "../context";
 
 function TaskListItems({ tas }) {
-    const { task, setTask, setEditTask } = useContext(TaskContext);
+    const {dispatch, setEditTask } = useContext(TaskContext);
 
     const DeleteHandler = () => {
-        const isConfirm = window.confirm("Are you sure you want to delete this item?");
+        const isConfirm = window.confirm("Do you really want to delete this item?");
         if (isConfirm) {
-            setTask(task.filter((t) => t.id !== tas.id));
+            dispatch({
+                type:'DELETE_TASK',
+                payload:tas.id,
+            })
         }
     };
 

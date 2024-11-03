@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { TaskContext } from "../context";
 
 function TaskListHeader() {
-    const { setTask } = useContext(TaskContext);
+    const { dispatch } = useContext(TaskContext);
 
     const handleDeleteAll = () => {
         if (window.confirm("Are you sure you want to delete all tasks?")) {
-            setTask([]);
+            dispatch({ type:'DELETE_ALL' });
         }
     };
 
